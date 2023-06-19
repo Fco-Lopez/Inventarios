@@ -1,1 +1,61 @@
-﻿<h1>Articulos</h1>
+﻿@model List<Articulo>
+
+@{
+    ViewData["Title"] = "Articulos";
+}
+<p>
+    <a asp-action="Agregar">Nuevo Articulo</a>
+</p>
+
+<h1>Articulos</h1>
+
+
+<table class="table mt-6">
+    <thead>
+        <tr>
+            <th scope="col">Codigo</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Unidad</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Modificar</th>
+            <th scope="col">Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Articulo in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m=>Articulo.Codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>Articulo.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>Articulo.Unidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>Articulo.Precio)
+                </td>
+                <td>
+                    <form method="get" asp-action="Modificar" asp-route-id="@Articulo.IdArticulo">
+                        <button type="submit" class="btn btn-primary">Modificar</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" asp-action="Delete" asp-route-id="@Articulo.IdArticulo">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

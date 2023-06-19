@@ -49,6 +49,16 @@ namespace Inventarios.Controllers
                 var grupo = _context.Grupos.Find(id);
                 if (grupo != null)
                 {
+                    var articulos = _context.Articulos
+                        .Where(a => a.IdGrupo == grupo.IdGrupo)
+                        .ToList();
+
+                    if (articulos.Count > 0)
+                    {
+                        //TempData["Mensaje"] = "No se puede eliminar el grupo, ya existe un artículo que lo usa.";
+                        return BadRequest("No se puede eliminar el grupo, ya existe un artículo que lo usa.");
+                    }
+
                     _context.Grupos.Remove(grupo);
                     await _context.SaveChangesAsync();
                 }
@@ -63,15 +73,11 @@ namespace Inventarios.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Modificar(Grupo grupo)
         {
-            //if (_context.Grupos.Contains())
-            //{
-
             if (ModelState.IsValid)
             {
                 _context.Grupos.Update(grupo);
                 await _context.SaveChangesAsync();
             }
-            //}
             return RedirectToAction(nameof(Index));
         }
     }
