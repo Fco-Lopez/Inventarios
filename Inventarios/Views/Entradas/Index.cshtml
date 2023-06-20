@@ -1,1 +1,66 @@
-﻿<h1>Entradas</h1>
+﻿@model List<Entrada>
+
+@{
+    ViewData["Title"] = "Entradas";
+}
+
+<p>
+    <a asp-action="Agregar">Nueva entrada</a>
+</p>
+
+
+<h1>Entradas</h1>
+
+<table class="table mt-7">
+    <thead>
+        <tr>
+            <th scope="col">Folio</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Codigo</th>
+            <th scope="col">Articulo</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Modificar</th>
+            <th scope="col">Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Entrada in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m=>Entrada.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>Entrada.Fecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>Entrada.IdArticuloNavigation.Codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>Entrada.IdArticuloNavigation.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>Entrada.Cantidad)
+                </td>
+                <td>
+                    <form method="get" asp-action="Modificar" asp-route-id="@Entrada.Id">
+                        <button type="submit" class="btn btn-primary">Modificar</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" asp-action="Eliminar" asp-route-id="@Entrada.Id">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
