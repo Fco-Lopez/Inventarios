@@ -4,4 +4,63 @@
     ViewData["Title"] = "Salidas";
 }
 
+<p>
+    <a asp-action="Agregar">Nueva salida</a>
+</p>
+
+
 <h1>Salidas</h1>
+
+<table class="table mt-7">
+    <thead>
+        <tr>
+            <th scope="col">Folio</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Codigo</th>
+            <th scope="col">Articulo</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Modificar</th>
+            <th scope="col">Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Salida in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m=>Salida.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>Salida.Fecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>Salida.IdArticuloNavigation.Codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>Salida.IdArticuloNavigation.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>Salida.Cantidad)
+                </td>
+                <td>
+                    <form method="get" asp-action="Modificar" asp-route-id="@Salida.Id">
+                        <button type="submit" class="btn btn-primary">Modificar</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" asp-action="Eliminar" asp-route-id="@Salida.Id">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

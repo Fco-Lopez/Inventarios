@@ -1,0 +1,50 @@
+﻿@model List<Articulo>
+
+@{
+    ViewData["Title"] = "Articulos";
+}
+
+<h1>Listado de Existencias</h1>
+
+
+<table class="table mt-6">
+    <thead>
+        <tr>
+            <th scope="col">Codigo</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Unidad</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Existencia</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Articulo in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m=>Articulo.Codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>Articulo.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>Articulo.Unidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>Articulo.Precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>Articulo.Existencia)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
