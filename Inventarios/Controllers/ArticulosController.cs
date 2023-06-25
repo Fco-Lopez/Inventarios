@@ -31,18 +31,27 @@ namespace Inventarios.Controllers
         {
             if (ModelState.IsValid)
             {
-                var articulo = new Articulo()
+                //usamos LINQ para obtener
+                bool existeCodigo = _context.Articulos.Any(a => a.Codigo == model.Codigo);
+                if (!existeCodigo)
                 {
-                    Codigo = model.Codigo,
-                    Nombre = model.Nombre,
-                    Unidad = model.Unidad,
-                    Existencia = model.Existencia,
-                    Precio = model.Precio,
-                    IdGrupo = model.IdGrupo,
-                };
-                _context.Add(articulo);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                    var articulo = new Articulo()
+                    {
+                        Codigo = model.Codigo,
+                        Nombre = model.Nombre,
+                        Unidad = model.Unidad,
+                        Existencia = model.Existencia,
+                        Precio = model.Precio,
+                        IdGrupo = model.IdGrupo,
+                    };
+                    _context.Add(articulo);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    return BadRequest("No se puede agregar otro artículo con el código " + model.Codigo + ".");
+                }
             }
             return View();
         }
@@ -103,12 +112,12 @@ namespace Inventarios.Controllers
                 var articulo = _context.Articulos.Find(model.IdArticulo);
                 if (articulo != null)
                 {
-                    articulo.Codigo = model.Codigo;
+                    //articulo.Codigo = model.Codigo;
                     articulo.Nombre = model.Nombre;
                     articulo.Unidad = model.Unidad;
                     articulo.IdGrupo = model.IdGrupo;
                     articulo.Precio = model.Precio;
-                    _context.Articulos.Update(articulo);
+                    //_context.Articulos.Update(articulo);
                     await _context.SaveChangesAsync();
                 }
             }

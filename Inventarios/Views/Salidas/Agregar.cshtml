@@ -1,7 +1,7 @@
 ﻿@using Inventarios.Models.ViewModels
-@model EntradaViewModel
+@model SalidaViewModel
 
-<h1>Agregar Entrada</h1>
+<h1>Agregar Salida</h1>
 
 <div class="row">
     <div class="col-ma-4">
@@ -59,7 +59,7 @@
                         //si no lo encuentra al no establecer el item del select carga de nuevo el código que se tenía antes de escribir el código a buscar
                         if (articulo != undefined) {
                             var idArticulo = articulo.idArticulo;
-                            if (idArticulo != undefined)
+                            if(idArticulo!= undefined)
                                 $('#IdArticulo').val(idArticulo);
                         }
                         actualizarCampos();
@@ -91,6 +91,6 @@
 @section Scripts
     {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");        
+    }    
 }

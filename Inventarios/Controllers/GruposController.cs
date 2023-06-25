@@ -18,14 +18,14 @@ namespace Inventarios.Controllers
         public async Task<IActionResult> Index()
            => View(await _context.Grupos.ToListAsync());
 
-        public IActionResult Create()
+        public IActionResult Agregar()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(GrupoViewModel model)
+        public async Task<IActionResult> Agregar(GrupoViewModel model)
         {
             if (ModelState.IsValid)
             {

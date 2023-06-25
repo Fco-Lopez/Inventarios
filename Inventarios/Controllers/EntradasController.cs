@@ -20,7 +20,17 @@ namespace Inventarios.Controllers
 
         public IActionResult Agregar()
         {
-            ViewData["Articulos"] = new SelectList(_context.Articulos, "IdArticulo", "Nombre");            
+            ViewData["Articulos"] = new SelectList(_context.Articulos, "IdArticulo", "Nombre");
+            var articulos = _context.Articulos
+             .Select(a => new
+             {
+                 a.IdArticulo,
+                 a.Codigo,
+                 a.Precio
+             })
+             .ToList();
+
+            ViewBag.DatosArticulo = articulos;
             return View();
         }
 
